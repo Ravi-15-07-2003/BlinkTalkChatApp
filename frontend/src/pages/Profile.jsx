@@ -22,26 +22,35 @@ const handleImage=(e)=>{
     setFrontendImage(URL.createObjectURL(file))
 }
 
-const handleProfile=async (e)=>{
-   
-e.preventDefault()
-setSaving(true)
-try {
+const handleProfile = async (e) => {
+  e.preventDefault();
+  setSaving(true);
 
-    let formData=new FormData()
-    formData.append("name",name)
-    if(backendImage){
-        formData.append("image",backendImage) 
+  try {
+    let formData = new FormData();
+    formData.append("name", name);
+    if (backendImage) {
+      formData.append("image", backendImage);
     }
-    let result=await axios.put(`${serverUrl}/api/user/profile`,formData,{withCredentials:true})
-    setSaving(false)
-    dispatch(setUserData(result.data))
-    navigate("/")
-} catch (error) {
-    console.log(error)
-    setSaving(false)
-}
-}
+
+    const token = localStorage.getItem("token"); // ✅ get token
+
+    let result = await axios.put(`${serverUrl}/api/user/profile`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}` // ✅ send token
+      }
+    });
+
+    setSaving(false);
+    dispatch(setUserData(result.data));
+    navigate("/");
+  } catch (error) {
+    console.log("Profile update failed", error.response?.data || error.message);
+    setSaving(false);
+  }
+};
+
+   
   return (
     <div className='w-full h-[100vh] bg-slate-200 flex flex-col justify-center items-center gap-[20px]'>
         <div className='fixed top-[20px] left-[20px] cursor-pointer' onClick={()=>navigate("/")}>
