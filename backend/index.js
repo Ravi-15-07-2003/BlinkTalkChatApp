@@ -14,7 +14,7 @@ const port=process.env.PORT || 5000
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://blink-talk-chat-h3y0x845i-ravi-15-07-2003s-projects.vercel.app"
+  "https://blink-talk-chat-kg6zqmhtw-ravi-15-07-2003s-projects.vercel.app"
 ];
 
 app.use(cors({
