@@ -12,19 +12,11 @@ import { app, server } from "./socket/socket.js"
 const port=process.env.PORT || 5000
 
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://blink-talk-chat-kg6zqmhtw-ravi-15-07-2003s-projects.vercel.app"
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: [
+    "http://localhost:5173", // for local development
+    "https://blink-talk-chat-app.vercel.app" // deployed frontend
+  ],
   credentials: true
 }));
 
